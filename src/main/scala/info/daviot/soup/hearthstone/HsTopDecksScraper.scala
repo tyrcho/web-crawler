@@ -36,10 +36,10 @@ object HstdDataParser extends DataParser[String, String] with JsoupParser {
     count = cardLine.select(".card-count").head.text.toInt
   } yield s"$count $name"
 
-  def extract(id: String, content: String): Future[List[String]] = for {
+  def extract(id: String, content: String): Future[Option[String]] = for {
     doc <- parseDocument(content)
   } yield for {
-    cl <- doc.select("div.decks-info").toList
+    cl <- doc.select("div.decks-info").toList.headOption
     c = cl.select("a").head.text
     cards = doc.select("a.card-frame")
   } yield s"${doc.title} $c,${parseCards(cards).toList} $id"
