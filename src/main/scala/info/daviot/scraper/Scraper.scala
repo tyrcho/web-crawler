@@ -89,6 +89,7 @@ abstract class Scraper[Id, Data](
       case DataFound(id, d) =>
         status()
         info(s"data recorded for $id")
+        debug(s"data recorded for $id:\n$d")
         data += id -> d
 
       case Done(id) =>
