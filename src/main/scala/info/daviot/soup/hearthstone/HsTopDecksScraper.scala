@@ -39,7 +39,7 @@ object HstdDataParser extends DataParser[String, String] with JsoupParser {
   def extract(id: String, content: String): Future[Option[String]] = for {
     doc <- parseDocument(content)
   } yield for {
-    cl <- doc.select("div.String-info").headOption
+    cl <- doc.select("div.decks-info").headOption
     c = cl.select("a").head.text
     cards = doc.select("a.card-frame")
   } yield s"${doc.title} $c,${parseCards(cards).toList} $id"
@@ -53,7 +53,7 @@ class HstdLinksParser(seasons: Int*) extends LinksParser[String] with JsoupParse
     } yield (for {
       link <- doc.getElementsByAttributeValueMatching(
         "href", s"(http://www.hearthstonetopdecks.com/decks/|$seasonStrings)").toList
-      if !id.contains("/Strings/") // do not follow links from Deck page
+      if !id.contains("/decks/") // do not follow links from Deck page
     } yield link.attr("href")).distinct
 }
  
