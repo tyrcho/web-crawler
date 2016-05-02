@@ -8,7 +8,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import scala.collection.JavaConversions._
 import scala.concurrent.ExecutionContext.Implicits.global
-import info.daviot.soup.DispatchJsoupScraper
+import info.daviot.soup.JsoupScraper
 import info.daviot.scraper.DataParser
 import info.daviot.scraper.LinksParser
 import info.daviot.soup.JsoupParser
@@ -18,7 +18,7 @@ class HsTopDecksScraper(
   val initial: Iterable[String],
   cacheFolder: String,
   seasons: Int*)
-    extends DispatchJsoupScraper[String](
+    extends JsoupScraper[String](
       HstdDataParser,
       new HstdLinksParser(seasons: _*),
       cacheFolder)
